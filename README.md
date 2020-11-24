@@ -9,6 +9,7 @@ After that, use these commands
 $> pip install -r requirements.txt
 $> npm install
 $> npm run build
+$> export FLASK_APP=api.py
 $> npm run start-api
 ```
 Then, the server will open in `localhost:5000`  
