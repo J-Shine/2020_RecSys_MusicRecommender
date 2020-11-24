@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactJkMusicPlayer from 'react-jinke-music-player';
-import 'react-jinke-music-player/assets/index.css';
 import AsyncSelect from 'react-select/async';
 import makeAnimated from 'react-select/animated';
 import YouTube from 'react-youtube'
