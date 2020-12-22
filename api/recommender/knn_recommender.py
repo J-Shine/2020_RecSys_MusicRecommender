@@ -13,8 +13,8 @@ from collections import Counter
 
 
 class KNNRecommender(RecInterface):
-  train = pd.read_json("/Users/junslim11/2020_RecSys_MusicRecommender/api/train.json")
-  song_meta = pd.read_json("/Users/junslim11/2020_RecSys_MusicRecommender/api/song_meta.json")
+  train = pd.read_json("train.json")
+  song_meta = pd.read_json("song_meta.json")
   train_data = train[['id','songs']]
   n_train = len(train_data)
   n_songs = len(song_meta)
