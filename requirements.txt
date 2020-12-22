@@ -1,2 +1,4 @@
 flask
 youtube-search-python
+scipy
+sklearn

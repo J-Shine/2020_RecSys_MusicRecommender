@@ -2,10 +2,11 @@ from flask import Flask, request
 import json
 from difflib import SequenceMatcher
 from youtubesearchpython import SearchVideos
-from recommender.test_recommender import TestRecommender
+#from recommender.test_recommender import TestRecommender
+from recommender.knn_recommender import KNNRecommender
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
-recommender = TestRecommender()
+recommender = KNNRecommender()
 
 with open('song_meta.json') as json_file:
   songs = json.load(json_file)
@@ -32,6 +33,7 @@ def index():
 
 @app.route('/api/search', methods=['GET'])
 def search():
+
   title = request.args.get('title')
 
   items = []
@@ -45,10 +47,10 @@ def search():
 
 @app.route('/api/recommendation', methods=['POST'])
 def recommendation():
+  print('searching')
   data = request.json
   user_playlist = [item['value'] for item in data]
   recommendation = recommender.inference(user_playlist)
-
   parsed_recommendation = []
   for item in songs_parsed:
     if item['value'] in recommendation:
@@ -57,14 +59,18 @@ def recommendation():
   output = []
 
   for item in parsed_recommendation:
+    if len(output) == 10:
+      break
     search = SearchVideos(item['label'], mode = 'dict', language = 'ko-KR', region = "KR").result()
-    search = search["search_result"][0]["id"]
-    output.append({
-      'label': item['label'],
-      'value': item['value'],
-      'videoId': search
-    })
-
+    try:
+      search = search["search_result"][0]["id"]
+      output.append({
+        'label': item['label'],
+        'value': item['value'],
+        'videoId': search
+      })
+    except:
+      continue
   return {"result" : output}
 
 if __name__ == "__main__":              
