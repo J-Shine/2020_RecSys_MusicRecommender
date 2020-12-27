@@ -2,12 +2,12 @@ from flask import Flask, request
 import json
 from difflib import SequenceMatcher
 from youtubesearchpython import SearchVideos
-from recommender.test_recommender import TestRecommender
+from .recommender.test_recommender import TestRecommender
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 recommender = TestRecommender()
 
-with open('song_meta.json') as json_file:
+with open('song_meta.json', encoding='UTF-8') as json_file:
   songs = json.load(json_file)
 
 songs_parsed = []
