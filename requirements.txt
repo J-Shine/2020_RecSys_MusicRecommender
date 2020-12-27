@@ -2,3 +2,4 @@ flask
 youtube-search-python
 scipy
 sklearn
+pandas
