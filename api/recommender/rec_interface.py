@@ -6,4 +6,5 @@ class RecInterface:
     """Recommend Playlist with given user playlist
     :return: (List) song_ids of the recommended playlist
     """
+    # print(user_playlist)
     raise NotImplementedError
