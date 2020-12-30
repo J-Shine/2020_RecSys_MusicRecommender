@@ -3,7 +3,7 @@
 HAI Playlist Continuation Task
 
 ## 🔨 How to run  
-Download the `song_meta.json` to `api/`  
+Download the `song_meta.json` and `train.json` to `api/`  
 After that, use these commands
 ```bash
 $> pip install -r requirements.txt
