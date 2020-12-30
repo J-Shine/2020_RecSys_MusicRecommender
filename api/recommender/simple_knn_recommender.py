@@ -37,9 +37,8 @@ class SimpleKNNRecommender(RecInterface):
         cand_song = train_songs_A_T[:, inds].dot(vals2)
         cand_song_idx = cand_song.reshape(-1).argsort()[-100:][::-1]  # 내림차순 정렬
 
-        cand_song_idx = cand_song_idx[np.isin(cand_song_idx, songs_already) == False][ :30]  # playlist에 원래 있던 song이 아닌 것들 100개
+        cand_song_idx = cand_song_idx[np.isin(cand_song_idx, songs_already) == False][ :30]  # playlist에 원래 있던 song이 아닌 것들 30개
         rec_song_idx = [i for i in cand_song_idx]
-        print(rec_song_idx)
 
         return rec_song_idx
 
@@ -48,7 +47,6 @@ class SimpleKNNRecommender(RecInterface):
         :return: (List) song_ids of the recommended playlist (추천할 song id list를 return하도록 구현)
         """
         test_plylist = [{'id':120000, 'songs':user_playlist}] #train의 playlist id가 115071번까지 있어서 120000
-        print(test_plylist)
         test = pd.DataFrame(data=test_plylist)
         plylst = pd.concat([self.train_plylist, test], ignore_index=True) # train + test
 
