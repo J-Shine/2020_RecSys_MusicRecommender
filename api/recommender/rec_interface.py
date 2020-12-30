@@ -29,7 +29,9 @@ class RecInterface:
     print(self.dr.df)
     print("self.user_df")
     print(self.user_df)
+    """
     self.dr.all_df = self.dr.df.append(self.user_df)
+    """
     print("self.dr.all_df")
     print(self.dr.all_df)
     """
