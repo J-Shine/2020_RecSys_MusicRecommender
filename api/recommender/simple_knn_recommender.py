@@ -40,11 +40,7 @@ class SimpleKNNRecommender(RecInterface):
         cand_song = train_songs_A_T[:, inds].dot(vals2)
         cand_song_idx = cand_song.reshape(-1).argsort()[-50:][::-1]
 
-<<<<<<< HEAD
-        cand_song_idx = cand_song_idx[np.isin(cand_song_idx, songs_already) == False][ :15]  # playlist에 원래 있던 song이 아닌 것들 15개
-=======
         cand_song_idx = cand_song_idx[np.isin(cand_song_idx, songs_already) == False][ :30]  # playlist에 원래 있던 song이 아닌 것들 30개
->>>>>>> 7073362a148c822785cc2779385cb5360178a0e2
         rec_song_idx = [i for i in cand_song_idx]
 
         return rec_song_idx
