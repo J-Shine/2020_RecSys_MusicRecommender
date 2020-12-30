@@ -13,12 +13,30 @@ from collections import Counter
 
 
 class KNNRecommender(RecInterface):
-  train = pd.read_json("train.json")
-  song_meta = pd.read_json("song_meta.json")
-  train_data = train[['id','songs']]
-  n_train = len(train_data)
-  n_songs = len(song_meta)
-  total = []
+
+  def __init__(self):
+    self.train = pd.read_json("train.json")
+    self.song_meta = pd.read_json("song_meta.json")
+    self.train = self.train[['id','songs']]
+    self.n_train = len(self.train)
+    self.n_songs = len(self.song_meta)
+    all_songs = self.train['songs']
+    self.song_counter = Counter([song for songs in all_songs for song in songs])
+    self.song_dict = {x: self.song_counter[x] for x in self.song_counter}
+    self.total = []
+    self.train.loc[:, 'num_songs'] = self.train['songs'].map(len)
+    self.train['song_count'] = self.train['songs'].map(
+      lambda x: [1 / ((self.song_dict.get(song) - 1) ** (0.44) + 1) for song in x])
+    row = np.repeat(range(self.n_train), self.train['num_songs'])
+    col = [song for songs in self.train['songs'] for song in songs]
+    dat = np.repeat(1, self.train['num_songs'].sum())
+    self.train_songs_A = spr.csr_matrix((dat, (row, col)), shape=(self.n_train, self.n_songs))
+
+    song_count_data = np.concatenate(self.train['song_count'])
+    row = np.repeat(range(self.n_train), self.train['num_songs'])
+    col = [song for songs in self.train['songs'] for song in songs]
+    self.train_songs_freq = spr.csr_matrix((song_count_data, (row, col)), shape=(self.n_train, self.n_songs))
+
   def rec(self, user_playlist):
     amplifier = 2
 
@@ -40,43 +58,24 @@ class KNNRecommender(RecInterface):
     """Recommend Playlist with given user playlist
     :return: (List) song_ids of the recommended playlist
     """
-    test_data = [{'id': 90000000, 'songs': user_playlist}]
-    test = pd.DataFrame(data=test_data)
-    print(test)
-    plylst = pd.concat([self.train_data, test], ignore_index=True)
-    print(plylst.tail())
-    all_songs = plylst['songs']
-    song_counter = Counter([song for songs in all_songs for song in songs])
-    song_dict = {x: song_counter[x] for x in song_counter}
-
-    plylst_use = plylst[['songs', 'id']]
-    plylst_use.loc[:, 'num_songs'] = plylst_use['songs'].map(len)
+    test = [{'id': 90000000, 'songs': user_playlist, 'num_songs': len(user_playlist)}]
+    plylst_use = pd.DataFrame(data=test)
     plylst_use['song_count'] = plylst_use['songs'].map(
-      lambda x: [1 / ((song_dict.get(song) - 1) ** (0.44) + 1) for song in x])
-    plylst_train = plylst_use.iloc[:-1, :]
-    plylst_test = plylst_use.iloc[-1:, :]
+      lambda x: [1 / ((self.song_dict.get(song) - 1) ** (0.44) + 1) for song in x])
 
-    row = np.repeat(range(self.n_train), plylst_train['num_songs'])
-    col = [song for songs in plylst_train['songs'] for song in songs]
-    dat = np.repeat(1, plylst_train['num_songs'].sum())
-    train_songs_A = spr.csr_matrix((dat, (row, col)), shape=(self.n_train, self.n_songs))
-
-    row2 = np.repeat(range(1), plylst_test['num_songs'])
-    col2 = [song for songs in plylst_test['songs'] for song in songs]
-    dat2 = np.repeat(1, plylst_test['num_songs'].sum())
+    row2 = np.repeat(range(1), plylst_use['num_songs'])
+    col2 = [song for songs in plylst_use['songs'] for song in songs]
+    dat2 = np.repeat(1, plylst_use['num_songs'].sum())
     test_songs_A = spr.csr_matrix((dat2, (row2, col2)), shape=(1, self.n_songs))
 
-    similarity = cosine_similarity(test_songs_A, train_songs_A)
+    similarity = cosine_similarity(test_songs_A, self.train_songs_A)
 
-    song_cound_data = np.concatenate(plylst_train['song_count'])
-    row = np.repeat(range(self.n_train), plylst_train['num_songs'])
-    col = [song for songs in plylst_train['songs'] for song in songs]
-    train_songs_freq = spr.csr_matrix((song_cound_data, (row, col)), shape=(self.n_train, self.n_songs))
-    frequency = test_songs_A.dot(train_songs_freq.T)
+
+    frequency = test_songs_A.dot(self.train_songs_freq.T)
     frequency_array = frequency.toarray()
     self.total = frequency_array * similarity
 
-    answers = self.rec(plylst_test.index)
+    answers = self.rec(user_playlist)
 
     return answers
 
