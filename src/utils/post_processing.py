@@ -72,7 +72,7 @@ def eurm_remove_seed(eurm, datareader, eliminate_negative=True):
     # Get urm with shape of eurm
     urm = datareader.get_urm(only_load=True)
     # pids = datareader.get_val_pids()
-    urm_test = urm[MAX_PLAYLISTS]
+    urm_test = urm[MAX_PLAYLISTS - 1]
     max_value = eurm.max()
 
     new_data = np.ones(len(urm_test.data)) * max_value

@@ -3,9 +3,10 @@ import json
 from difflib import SequenceMatcher
 from youtubesearchpython import SearchVideos
 from .recommender.test_recommender import TestRecommender
+from .recommender.rec_interface import RecInterface
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
-recommender = TestRecommender()
+recommender = RecInterface()
 
 with open('song_meta.json', encoding='UTF-8') as json_file:
   songs = json.load(json_file)

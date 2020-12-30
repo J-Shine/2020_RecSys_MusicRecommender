@@ -14,24 +14,28 @@ MAX_PLAYLISTS = 153430
 NUM_TRACKS = 707989
 
 class DataReader:
-    def __init__(self, train_fname = "C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_json/train.json",
-                 val_fname = "C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_json/val.json",
-                 test_fname = "C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_json/test.json",
+    def __init__(self, train_fname = "../data/data_json/train.json",
+                 val_fname = "../data/data_json/val.json",
+                 test_fname = "../data/data_json/test.json",
                  only_load = False):
         # only load urm if only_load mode is True
         if only_load:
-            train_fname_csv = "C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/train.csv"
-            val_fname_csv = "C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/val.csv"
-            val_pid_fname_csv = "C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/val_pid.csv"
-            test_fname_csv = "C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/test.csv"
+            train_fname_csv = "../data/data_csv/train.csv"
+            val_fname_csv = "../data/data_csv/val.csv"
+            val_pid_fname_csv = "../data/data_csv/val_pid.csv"
+            test_fname_csv = "../data/data_csv/test.csv"
+            all_fname_csv = "../data/data_csv/all.csv"
+
             if os.path.isfile(train_fname_csv) and os.path.isfile(val_fname_csv)\
                     and os.path.isfile(val_pid_fname_csv) and os.path.isfile(test_fname_csv):
                 self.train_df = self.load_csv(train_fname_csv)
                 self.val_df = self.load_csv(val_fname_csv)
                 self.val_pid_df = self.load_val_pid_csv(val_pid_fname_csv)
                 self.test_df = self.load_csv(test_fname_csv)
+                self.df = self.load_csv(all_fname_csv)
             else:
                 print("Error: File doesn't exist")
+
 
 
         """
@@ -56,7 +60,7 @@ class DataReader:
             self.val_df.rename(columns={'playlist_id':'pid',
                                           'song_id':'tid'},inplace=True)
             # csv로 저장
-            self.val_df.to_csv("C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/val.csv")
+            self.val_df.to_csv("../data/data_csv/val.csv")
             print("val.json -> val.csv done")
 
             # read validate set
@@ -73,7 +77,7 @@ class DataReader:
             self.val_pid_df.rename(columns={'playlist_id': 'pid'}, inplace=True)
 
             # csv로 저장
-            self.val_pid_df.to_csv("C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/val_pid.csv")
+            self.val_pid_df.to_csv("../data/data_csv/val_pid.csv")
             print("val.json -> val_pid.csv done")
 
             """
@@ -96,7 +100,7 @@ class DataReader:
             self.train_df.rename(columns={'playlist_id':'pid',
                                           'song_id':'tid'},inplace=True)
             # csv로 저장
-            self.train_df.to_csv("C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/train.csv")
+            self.train_df.to_csv("../data/data_csv/train.csv")
             print("train.json -> train.csv done")
 
             """
@@ -119,15 +123,16 @@ class DataReader:
             self.test_df.rename(columns={'playlist_id':'pid',
                                           'song_id':'tid'},inplace=True)
             # csv로 저장
-            self.test_df.to_csv("C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/test.csv")
+            self.test_df.to_csv("../data/data_csv/test.csv")
             print("test.json -> test.csv done")
             self.df = pd.concat([self.train_df, self.val_df, self.test_df], axis=0, join='outer')
-            self.all_df = self.df
+            self.df.to_csv("../data/data_csv/all.csv")
+            print("all.csv done")
 
     def get_urm(self, only_load = False):
         # only load urm if only_load mode is True
         if only_load:
-            file_full_path = 'C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/matrices/ptm.npz'
+            file_full_path = '../matrices/ptm.npz'
             if os.path.isfile(file_full_path):
                 urm = self.__load_matrix(file_full_path)
                 return urm
@@ -140,11 +145,24 @@ class DataReader:
         # collect data to build urm
         playlists = self.all_df['pid'].values
         tracks = self.all_df['tid'].values
+        """
+        playlists = self.all_df['pid'].values
+        tracks = self.all_df['tid'].values
+        """
+        print("playlists")
+        print(playlists)
+        print("tracks")
+        print(tracks)
         assert (playlists.size == tracks.size)
         n_playlists = MAX_PLAYLISTS
         n_tracks = NUM_TRACKS
         n_interactions = tracks.size
-
+        print("n_playlists")
+        print(n_playlists)
+        print("n_tracks")
+        print(n_tracks)
+        print("n_interactions")
+        print(n_interactions)
         # building the user-rating matrix(playlist-track matrix)
         urm = sp.csr_matrix((np.ones(n_interactions), (playlists,tracks)),
                             shape=(n_playlists, n_tracks), dtype=np.int32)
@@ -178,7 +196,7 @@ class DataReader:
         if not os.path.exists('../matrices/'):
             os.makedirs('../matrices/')
             print("saving matrix...")
-        sp.save_npz('C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/matrices/' + name+ '.npz', sparse_matrix)
+        sp.save_npz('../matrices/' + name+ '.npz', sparse_matrix)
 
     def __load_matrix(self, file_path):
         npz =  sp.load_npz(file_path).tocsr()
@@ -190,7 +208,7 @@ class DataReader:
         :return:            numpy ndarray of shape (10k, 2/3/4/5 )
                                                     (playlists id, features[name...numtracks]
         """
-        df = pd.read_csv(filepath_or_buffer='C:/Users/james/OneDrive/바탕 화면/한양대/한양대 인공지능 동아리/2020_RecSys_MusicRecommender/src/data/data_csv/val_pid.csv',
+        df = pd.read_csv(filepath_or_buffer='../data/data_csv/val_pid.csv',
                          sep=',', header=0,
                          usecols=['pid'],
                          dtype={'pid': np.int32})
