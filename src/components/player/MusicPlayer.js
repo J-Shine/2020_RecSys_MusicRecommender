@@ -11,6 +11,7 @@ function MusicPlayer() {
   const [selectedPlaylist, setSelectedPlaylist] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [videoId, setVideoId] = useState("");
+  const [engineId, setEngineId] = useState(0);
 
   const loadOptions = async (inputText, callback) => {
     const response = await fetch(`/api/search?title=${inputText}`)
@@ -27,7 +28,7 @@ function MusicPlayer() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(selectedPlaylist)
+      body: JSON.stringify({'engineId': engineId, 'playlist': selectedPlaylist})
     }).then(response => response.json());
     setPlaylist(response.result);
   }
