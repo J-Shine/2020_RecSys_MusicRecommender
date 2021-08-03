@@ -1,29 +1,8 @@
-# Playlist Continuation
+# Music Recommender
 
-HAI Playlist Continuation Task
+This is a music recommender implementing a part of the [paper](https://dl.acm.org/doi/10.1145/3267471.3267475) written by Creamy Fireflies on Recsys Challenge 2018: Automatic Music Playlist Continuation.<br>
 
-## 🔨 How to run  
-Download the `song_meta.json`, `test.json`, `train.json`, `val.json` to `api/`  
-After that, use these commands
-```bash
-$> pip install -r requirements.txt
-$> npm install
-$> npm run build
-$> export FLASK_APP=api.py
-$> npm run start-api
-```
-Then, the server will open in `localhost:5000`  
+# Demo
 
-## 🔎 How to Implement Recommender
-Implement `inference` in `api/recommender/test_recommender.py`
-```python
-class RecInterface:
-  def __init__(self):
-    pass
+https://user-images.githubusercontent.com/61873510/128025086-5a358ebb-7b79-4878-a619-901305de202c.mp4
 
-  def inference(self, user_playlist):
-    """Recommend Playlist with given user playlist
-    :return: (List) song_ids of the recommended playlist
-    """
-    raise NotImplementedError
-```
