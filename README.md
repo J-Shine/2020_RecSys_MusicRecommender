@@ -1,6 +1,7 @@
 # Music Recommender
 
-This is a music recommender implementing a part of the [paper](https://dl.acm.org/doi/10.1145/3267471.3267475) written by Creamy Fireflies on Recsys Challenge 2018: Automatic Music Playlist Continuation.<br>
+This is a music recommender implementing a part of [the paper](https://dl.acm.org/doi/10.1145/3267471.3267475) and [the codes](https://github.com/tmscarla/spotify-recsys-challenge) written by Creamy Fireflies on Recsys Challenge 2018: Automatic Music Playlist Continuation.<br>
+
 
 # Demo
 
