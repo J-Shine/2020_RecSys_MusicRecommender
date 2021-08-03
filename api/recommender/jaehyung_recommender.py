@@ -25,18 +25,7 @@ class JaehyungRecommender(RecInterface):
       self.user_df.iloc[i][1] = np.int32(song)
       i = i + 1
 
-    """
-    print("self.dr.df")
-    print(self.dr.df)
-    print("self.user_df")
-    print(self.user_df)
-    """
-
     self.dr.all_df = self.dr.df.append(self.user_df, ignore_index=True)
-    """
-    print("self.dr.all_df")
-    print(self.dr.all_df)
-    """
 
     # calculate score
     urm = self.dr.get_urm(only_load=False)
