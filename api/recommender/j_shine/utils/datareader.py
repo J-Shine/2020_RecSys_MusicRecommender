@@ -152,24 +152,12 @@ class DataReader:
         # collect data to build urm
         playlists = self.all_df['pid'].values
         tracks = self.all_df['tid'].values
-        """
-        print("playlists")
-        print(playlists)
-        print("tracks")
-        print(tracks)
-        """
+
         assert (playlists.size == tracks.size)
         n_playlists = MAX_PLAYLISTS
         n_tracks = NUM_TRACKS
         n_interactions = tracks.size
-        """
-        print("n_playlists")
-        print(n_playlists)
-        print("n_tracks")
-        print(n_tracks)
-        print("n_interactions")
-        print(n_interactions)
-        """
+
         # building the user-rating matrix(playlist-track matrix)
         urm = sp.csr_matrix((np.ones(n_interactions), (playlists,tracks)),
                             shape=(n_playlists, n_tracks), dtype=np.int32)
