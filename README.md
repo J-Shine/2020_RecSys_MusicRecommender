@@ -9,7 +9,10 @@ It is referencing a part of [the paper](https://dl.acm.org/doi/10.1145/3267471.3
 
 # Demo
 
-https://user-images.githubusercontent.com/61873510/128025086-5a358ebb-7b79-4878-a619-901305de202c.mp4<br>
+
+
+https://user-images.githubusercontent.com/61873510/128503165-c55ff756-c96b-4013-a8cc-944d9e5a8167.mp4
+
 
 
 # Full Pipeline
