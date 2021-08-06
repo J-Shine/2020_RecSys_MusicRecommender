@@ -14,5 +14,5 @@ https://user-images.githubusercontent.com/61873510/128025086-5a358ebb-7b79-4878-
 
 # Full Pipeline
 
-<img width="827" alt="그림설명_1" src="https://user-images.githubusercontent.com/61873510/128503030-2b597b0c-ab07-47d7-a1c4-a36bfd9d63ac.png">
+<img width="670" alt="그림설명_1" src="https://user-images.githubusercontent.com/61873510/128503030-2b597b0c-ab07-47d7-a1c4-a36bfd9d63ac.png">
 
