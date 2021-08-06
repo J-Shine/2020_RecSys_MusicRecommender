@@ -1,7 +1,7 @@
 # Music Recommender
 
 *These music recommenders are created by the team of the Hanyang AI Society.*<br>
-*Each team member developed there own recommender and merged them to one to demonstrate.*<br><br>
+*Each team member developed their own recommender and merged them to one to demonstrate.*<br><br>
 
 Here, I demonstrate works of mine.<br>
 It is referencing a part of [the paper](https://dl.acm.org/doi/10.1145/3267471.3267475) and [the codes](https://github.com/tmscarla/spotify-recsys-challenge) written by Creamy Fireflies on Recsys Challenge 2018: Automatic Music Playlist Continuation.<br>
