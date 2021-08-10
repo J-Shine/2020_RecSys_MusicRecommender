@@ -9,13 +9,22 @@ It is referencing a part of [the paper](https://dl.acm.org/doi/10.1145/3267471.3
 
 # Demo
 
-
-
 https://user-images.githubusercontent.com/61873510/128503165-c55ff756-c96b-4013-a8cc-944d9e5a8167.mp4
-
-
 
 # Full Pipeline
 
 <img width="670" alt="그림설명_1" src="https://user-images.githubusercontent.com/61873510/128503030-2b597b0c-ab07-47d7-a1c4-a36bfd9d63ac.png">
 
+# Steps
+
+## Preprocessing
+
+<img width="670" alt="그림설명_2_Preprocessing" src="https://user-images.githubusercontent.com/61873510/128853863-2cf223c6-99a2-4bba-a799-db42a4e67447.png">
+
+Convert train, validate and test files from json to csv and merge them to one.<br>
+
+<img width="289" alt="그림설명_2_urm" src="https://user-images.githubusercontent.com/61873510/128856673-85a713d1-3c1f-455b-be6b-8623f696d481.png">
+
+Then pick playlists column and tracks column to make sparse binary matrix, that is, user rating matrix.<br>
+
+## Dot Product
