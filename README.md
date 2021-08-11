@@ -37,6 +37,6 @@ Make similarity matrix(variable s) by dot producting track vectors itself.<br>
 ### Score Matrix
 <img width="770" alt="그림설명_3_score" src="https://user-images.githubusercontent.com/61873510/128976562-57b072a5-5187-49e4-98d8-a7b3fdc84d40.png">
 
-Do dot product urm and similarity matrix to get score matrix.<br>
+Do dot product for the urm and the similarity matrix to get a score matrix.<br>
 Element s_ij of the score matrix indicates how many playlists track_i and track_j have in common.<br>
 Then choose top tracks to make recommend list.<br><br>
