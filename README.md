@@ -28,7 +28,7 @@ Convert train, validate and test files from json to csv and merge them to one.<b
 Then pick playlists column and tracks column to make sparse binary matrix, that is, user rating matrix.<br>
 
 ## Processing
-<img width="382" alt="그림설명_3_processing" src="https://user-images.githubusercontent.com/61873510/128977616-2ec48c02-7fcf-4a66-bd84-0298c0f8b7b8.png">
+<img width="350" alt="그림설명_3_processing" src="https://user-images.githubusercontent.com/61873510/128979313-01b9194b-35f3-4620-9528-76da7ab801b8.png">
 
 ### Similarity Matrix
 <img width="670" alt="similarity matrix" src="https://user-images.githubusercontent.com/61873510/128973094-7fd65f6f-2390-4ebb-a636-93c554c2808f.png">
